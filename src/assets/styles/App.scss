@@ -1,3 +1,12 @@
+@import './Vars.scss';
+
+* {
+  box-sizing: border-box;
+}
+
 body {
+  background: $main-color;
+  font-family: $theme-font;
   margin: 0;
+  height: calc(100vh - 100px);
 }
