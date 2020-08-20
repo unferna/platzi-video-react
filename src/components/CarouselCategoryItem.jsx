@@ -1,19 +1,28 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const CarouselCategoryItem = () => {
+const CarouselCategoryItem = ({ cover, title, year, contentRating, duration }) => {
   return (
     <div className="carousel-item">
-      <img className="carousel-item__img" src="https://images.pexels.com/photos/4050888/pexels-photo-4050888.jpeg?cs=srgb&dl=photo-of-woman-wearing-white-dress-4050888.jpg&fm=jpg" alt="People" />
+      <img className="carousel-item__img" src={ cover } alt={title} />
       <div className="carousel-item__details">
           <div>
             <i className="material-icons">play_arrow</i>
             <i className="material-icons">playlist_add</i>
           </div>
-          <p className="carousel-item__details--title">Título descriptivo</p>
-          <p className="carousel-item__details--subtitle">2019 16+ 114min</p>
+          <p className="carousel-item__details--title">{title}</p>
+          <p className="carousel-item__details--subtitle">{`${year} ${contentRating} ${duration}min`}</p>
       </div>
     </div>
   )
+}
+
+CarouselCategoryItem.propTypes = {
+  cover: PropTypes.string,
+  title: PropTypes.string,
+  year: PropTypes.number,
+  contentRating: PropTypes.string,
+  duration: PropTypes.number,
 }
 
 export default CarouselCategoryItem

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import '../assets/styles/App.scss'
 
 // Components
@@ -9,34 +9,45 @@ import CarouselCategory from '../components/CarouselCategory'
 import CarouselCategoryItem from '../components/CarouselCategoryItem'
 import Footer from '../components/Footer'
 
-const App = () => (
-  <React.StrictMode>
-    <Header />
-    <Search />
+// Hooks
+import useInitialState from '../hooks/useInitialState'
 
-    <Carousel category_title="Home">
-      <CarouselCategory>
-        <CarouselCategoryItem />
-        <CarouselCategoryItem />
-      </CarouselCategory>
-    </Carousel>
+const API = `http://localhost:3001/initialState`
 
-    <Carousel category_title="Sci-fi">
-      <CarouselCategory>
-        <CarouselCategoryItem />
-        <CarouselCategoryItem />
-        <CarouselCategoryItem />
-      </CarouselCategory>
-    </Carousel>
+const App = () => {
+  const categories = useInitialState(API)
 
-    <Carousel category_title="Comedy">
-      <CarouselCategory>
-        <CarouselCategoryItem />
-      </CarouselCategory>
-    </Carousel>
+  return (
+    <React.StrictMode>
+      <Header />
+      <Search />
+      
+      {/* Other Categories */}
+      { 
+        categories.map(category => {
+          return ( 
+            <Carousel category_title={ category.title } key={ category.title }>
+              <CarouselCategory>
+                {
+                  category.content.map(video => {
+                    return (
+                      <CarouselCategoryItem
+                        key={ video.id }
+                        { ...video }
+                      />
+                    )
+                  })
+                }
+                
+              </CarouselCategory>
+            </Carousel>
+          )
+        })
+      }
 
-    <Footer />
-  </React.StrictMode>
-)
+      <Footer />
+    </React.StrictMode>
+  )
+}
 
 export default App
